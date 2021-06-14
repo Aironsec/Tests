@@ -1,11 +1,15 @@
 package com.geekbrains.tests.presenter.details
 
+import androidx.annotation.VisibleForTesting
 import com.geekbrains.tests.view.details.ViewDetailsContract
 
 internal class DetailsPresenter internal constructor(
     private val viewContract: ViewDetailsContract,
     private var count: Int = 0
 ) : PresenterDetailsContract {
+
+    @VisibleForTesting
+    var currentView: ViewDetailsContract? = null
 
     override fun setCounter(count: Int) {
         this.count = count
@@ -19,5 +23,14 @@ internal class DetailsPresenter internal constructor(
     override fun onDecrement() {
         count--
         viewContract.setCount(count)
+    }
+
+    override fun onAttachView() {
+        currentView = viewContract
+    }
+
+    override fun onDetachView() {
+        if (currentView == viewContract)
+            currentView = null
     }
 }
