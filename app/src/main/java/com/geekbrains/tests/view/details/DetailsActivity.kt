@@ -37,6 +37,16 @@ class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
             String.format(Locale.getDefault(), getString(R.string.results_count), count)
     }
 
+    override fun onStart() {
+        super.onStart()
+        presenter.onAttachView()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        presenter.onDetachView()
+    }
+
     companion object {
 
         const val TOTAL_COUNT_EXTRA = "TOTAL_COUNT_EXTRA"
